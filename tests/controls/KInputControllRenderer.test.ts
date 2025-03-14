@@ -33,6 +33,18 @@ const schemaRequired: Props['schema'] = {
   },
 }
 
+const schemaPassword: Props['schema'] = {
+  type: 'object',
+  required: ['name'],
+  properties: {
+    name: {
+      type: 'string',
+      title: 'Name',
+      format: 'password',
+    },
+  },
+}
+
 const schemaReadonly: Props['schema'] = {
   type: 'object',
   properties: {
@@ -41,6 +53,15 @@ const schemaReadonly: Props['schema'] = {
       title: 'Name',
       readOnly: true,
     },
+  },
+}
+
+const uischemaTextarea: Props['uischema'] = {
+  type: 'Control',
+  scope: '#/properties/name',
+  options: {
+    placeholder: 'Enter your name',
+    multi: true,
   },
 }
 
@@ -79,6 +100,16 @@ test('should has description tooltip', async () => {
   await wrapper.find('.k-popover').trigger('mouseover')
   expect(wrapper.find('.popover').exists()).to.be.true
   expect(wrapper.find('.popover').text()).to.equal(schema.properties!.name.description)
+})
+
+test('should render as a password input', () => {
+  const wrapper = mountJsonform({}, uischema, schemaPassword)
+  expect(wrapper.find('input').attributes('type')).to.equal('password')
+})
+
+test('should render as a textarea', () => {
+  const wrapper = mountJsonform({}, uischemaTextarea, schema)
+  expect(wrapper.find('textarea').exists()).to.be.true
 })
 
 test('should has initial value', () => {
