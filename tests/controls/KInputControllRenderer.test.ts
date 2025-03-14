@@ -33,18 +33,6 @@ const schemaRequired: Props['schema'] = {
   },
 }
 
-const schemaPassword: Props['schema'] = {
-  type: 'object',
-  required: ['name'],
-  properties: {
-    name: {
-      type: 'string',
-      title: 'Name',
-      format: 'password',
-    },
-  },
-}
-
 const schemaReadonly: Props['schema'] = {
   type: 'object',
   properties: {
@@ -103,13 +91,48 @@ test('should has description tooltip', async () => {
 })
 
 test('should render as a password input', () => {
-  const wrapper = mountJsonform({}, uischema, schemaPassword)
+  const wrapper = mountJsonform({}, uischema, {
+    type: 'object',
+    required: ['name'],
+    properties: {
+      name: {
+        type: 'string',
+        title: 'Name',
+        format: 'password',
+      },
+    },
+  })
   expect(wrapper.find('input').attributes('type')).to.equal('password')
 })
 
-test('should render as a textarea', () => {
+test('should render as a textarea', async () => {
   const wrapper = mountJsonform({}, uischemaTextarea, schema)
   expect(wrapper.find('textarea').exists()).to.be.true
+  const textarea = wrapper.find('textarea')
+  await textarea.setValue('John')
+  expect(wrapper.vm.data).to.deep.equal({ name: 'John' })
+})
+
+test('should render as a number input', async () => {
+  const wrapper = mountJsonform({}, {
+    type: 'Control',
+    scope: '#/properties/age',
+    options: {
+      placeholder: 'Enter your age',
+    },
+  }, {
+    type: 'object',
+    properties: {
+      age: {
+        type: 'integer',
+        title: 'Age',
+      },
+    },
+  })
+  expect(wrapper.find('input').attributes('type')).to.equal('number')
+  const input = wrapper.find('input')
+  await input.setValue('30')
+  expect(wrapper.vm.data).to.deep.equal({ age: 30 })
 })
 
 test('should has initial value', () => {
