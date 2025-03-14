@@ -1,1 +1,1 @@
-# jsonforms-renderers
+# Kong Renderers for `jsonforms`

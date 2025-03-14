@@ -8,6 +8,7 @@
     :label-attributes="labelAttributes"
     :placeholder="appliedOptions.placeholder"
     :required="control.required"
+    :show-password-mask-toggle="isPassword"
     :type="inputType"
     @change="handleChange"
   />
