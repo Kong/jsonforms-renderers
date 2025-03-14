@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
 
     permissions:
-      # Required to checkout the code
+      # Required to deploy to gh-pages
       contents: write
       # Required to put a comment into the pull-request
       pull-requests: write
@@ -44,6 +44,12 @@ jobs:
           publish_branch: gh-pages
           destination_dir: pr-${{ github.event.pull_request.number }}
           publish_dir: storybook-static
+
+      - name: Comment PR with Storybook link
+        uses: thollander/actions-comment-pull-request@v3
+        with:
+          message: |
+            Storybook is deployed at https://kong.github.io/jsonforms-renderers/pr-${{ github.event.pull_request.number }}
 
       - name: Run lint
         if: always()

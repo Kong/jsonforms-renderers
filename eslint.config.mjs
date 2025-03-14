@@ -5,6 +5,7 @@ export default [
   {
     ignores: [
       '**/lib/',
+      'storybook-static/',
     ],
   },
   {
