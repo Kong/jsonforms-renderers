@@ -14,6 +14,7 @@ dist-ssr
 lib
 analyze.html
 coverage/*
+storybook-static
 
 # Editor directories and files
 .vscode/*

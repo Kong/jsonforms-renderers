@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    name: Build & Test
+    name: Lint & Test
     runs-on: ubuntu-latest
 
     permissions:
@@ -34,6 +34,17 @@ jobs:
         timeout-minutes: 5
         run: pnpm install
 
+      - name: Build Storybook
+        run: pnpm build:storybook
+
+      - name: Deploy Storybook
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ github.token }}
+          publish_branch: gh-pages
+          destination_dir: pr-${{ github.event.pull_request.number }}
+          publish_dir: storybook-static
+
       - name: Run lint
         timeout-minutes: 5
         run: pnpm lint
@@ -42,7 +53,7 @@ jobs:
         timeout-minutes: 5
         run: pnpm test:coverage
 
-      - name: 'Report Coverage'
+      - name: Report Coverage
         # Set if: always() to also generate the report if tests are failing
         # Only works if you set `reportOnFailure: true` in your vite config as specified above
         if: always()
