@@ -84,6 +84,26 @@ export const LabelTooltip: Story = {
   },
 }
 
+export const Required: Story = {
+  args: {
+    uischema: {
+      type: 'Control',
+      scope: '#/properties/name',
+      options: {
+        placeholder: 'Please input a unique name.',
+      },
+    },
+    schema: {
+      type: 'object',
+      properties: {
+        name: { type: 'string' },
+      },
+      required: ['name'],
+    },
+    data: {},
+  },
+}
+
 // export const CheckBox: Story = {
 //   args: {
 //     uischema: {

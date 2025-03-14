@@ -50,6 +50,7 @@ jobs:
         with:
           message: |
             Storybook is deployed at https://kong.github.io/jsonforms-renderers/pr-${{ github.event.pull_request.number }}
+          mode: recreate
 
       - name: Run lint
         if: always()
