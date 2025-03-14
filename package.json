@@ -1,0 +1,71 @@
+{
+  "name": "@kong/jsonforms-renderers",
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "build:storybook": "storybook build",
+    "build": "vue-tsc -b && vite build",
+    "dev": "storybook dev -p 6006",
+    "lint:fix": "eslint --fix",
+    "lint": "eslint",
+    "test:coverage": "vitest run --coverage",
+    "test:watch": "vitest --watch",
+    "test": "vitest --run"
+  },
+  "main": "./lib/jsonforms-kong-renderers.umd.cjs",
+  "module": "./lib/jsonforms-kong-renderers.js",
+  "exports": {
+    ".": {
+      "import": "./lib/jsonforms-kong-renderers.js",
+      "require": "./lib/jsonforms-kong-renderers.umd.cjs"
+    },
+    "./style.css": "./lib/jsonforms-kong-renderers.css"
+  },
+  "author": "Kong, Inc.",
+  "license": "MIT",
+  "packageManager": "pnpm@10.6.1",
+  "devDependencies": {
+    "@chromatic-com/storybook": "^3.2.5",
+    "@jsonforms/core": "^3.5.1",
+    "@jsonforms/vue": "^3.5.1",
+    "@kong/eslint-config-kong-ui": "^1.2.6",
+    "@kong/kongponents": "^9.22.3",
+    "@storybook/addon-essentials": "^8.6.4",
+    "@storybook/addon-onboarding": "^8.6.4",
+    "@storybook/blocks": "^8.6.4",
+    "@storybook/experimental-addon-test": "^8.6.4",
+    "@storybook/test": "^8.6.4",
+    "@storybook/vue3": "^8.6.4",
+    "@storybook/vue3-vite": "^8.6.4",
+    "@types/lodash-es": "^4.17.12",
+    "@types/node": "^22.13.10",
+    "@vitejs/plugin-vue": "^5.2.1",
+    "@vitest/browser": "^3.0.8",
+    "@vitest/coverage-v8": "^3.0.8",
+    "@vitest/ui": "3.0.8",
+    "@vue/test-utils": "^2.4.6",
+    "@vue/tsconfig": "^0.7.0",
+    "eslint": "^9.22.0",
+    "eslint-plugin-promise": "^7.2.1",
+    "jsdom": "^26.0.0",
+    "lefthook": "^1.11.3",
+    "playwright": "^1.51.0",
+    "rollup-plugin-visualizer": "^5.14.0",
+    "storybook": "^8.6.4",
+    "typescript": "~5.7.2",
+    "vite": "^6.2.0",
+    "vitest": "^3.0.8",
+    "vitest-browser-vue": "^0.2.0",
+    "vue": "^3.5.13",
+    "vue-tsc": "^2.2.4"
+  },
+  "peerDependencies": {
+    "@jsonforms/core": ">=3.5.0",
+    "@jsonforms/vue": ">=3.5.0",
+    "@kong/kongponents": ">=9.22.0",
+    "vue": ">=3.5.0"
+  },
+  "dependencies": {
+    "lodash-es": "^4.17.21"
+  }
+}

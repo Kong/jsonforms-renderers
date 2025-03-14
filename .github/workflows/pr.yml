@@ -1,0 +1,69 @@
+name: PR
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    name: Build & Test
+    runs-on: ubuntu-latest
+
+    permissions:
+      # Required to deploy to gh-pages
+      contents: write
+      # Required to put a comment into the pull-request
+      pull-requests: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: pnpm/action-setup@v4 # version is determined from the packageManager field in package.json by default.
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: ".nvmrc"
+          cache: pnpm
+
+      - name: Install dependency
+        timeout-minutes: 5
+        run: pnpm install
+
+      - name: Build Storybook
+        run: pnpm build:storybook
+
+      - name: Deploy Storybook
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ github.token }}
+          publish_branch: gh-pages
+          destination_dir: pr-${{ github.event.pull_request.number }}
+          publish_dir: storybook-static
+
+      - name: Comment PR with Storybook link
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          header: pr_storybook_preview
+          message: |
+            Storybook is deployed at https://kong.github.io/jsonforms-renderers/pr-${{ github.event.pull_request.number }}
+
+      - name: Run lint
+        if: always()
+        timeout-minutes: 5
+        run: pnpm lint
+
+      - name: Run tests
+        if: always()
+        timeout-minutes: 5
+        run: pnpm test:coverage
+
+      - name: Report Coverage
+        # Set if: always() to also generate the report if tests are failing
+        # Only works if you set `reportOnFailure: true` in your vite config as specified above
+        if: always()
+        uses:  davelosert/vitest-coverage-report-action@v2

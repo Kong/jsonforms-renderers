@@ -1,0 +1,11 @@
+# Reference:
+# https://github.com/evilmartians/lefthook/blob/master/docs/full_guide.md
+
+pre-push:
+  parallel: true
+  commands:
+    eslint:
+      skip:
+        - merge
+        - rebase
+      run: pnpm run lint
