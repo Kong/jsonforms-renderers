@@ -12,7 +12,7 @@ jobs:
 
     permissions:
       # Required to checkout the code
-      contents: read
+      contents: write
       # Required to put a comment into the pull-request
       pull-requests: write
 
@@ -46,10 +46,12 @@ jobs:
           publish_dir: storybook-static
 
       - name: Run lint
+        if: always()
         timeout-minutes: 5
         run: pnpm lint
 
       - name: Run tests
+        if: always()
         timeout-minutes: 5
         run: pnpm test:coverage
 
