@@ -46,11 +46,11 @@ jobs:
           publish_dir: storybook-static
 
       - name: Comment PR with Storybook link
-        uses: thollander/actions-comment-pull-request@v3
+        uses: marocchino/sticky-pull-request-comment@v2
         with:
+          header: pr_storybook_preview
           message: |
             Storybook is deployed at https://kong.github.io/jsonforms-renderers/pr-${{ github.event.pull_request.number }}
-          mode: recreate
 
       - name: Run lint
         if: always()
